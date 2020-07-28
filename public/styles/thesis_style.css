@@ -1,0 +1,120 @@
+body {
+    margin: 20px;
+}
+
+.grid-container {  /* full page */
+    display: grid;
+    height: calc(100vh - 60px);
+    grid-template-columns: 400px auto ;
+    grid-template-rows: 50px auto 200px ;
+    grid-gap: 10px;
+    background-color: darkolivegreen;
+    padding: 10px;
+}
+
+.tab {  /*   frame of manage orders - loading plans - training buttons    */
+    grid-area: 1 / 1 / span 1 / span 1;
+    overflow: hidden;
+    width: 400px;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+.tab button { /* mo-lo-t buttons */
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 15px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+.tab button:hover {
+    background-color: #ddd;
+}
+.tab button.active {
+    background-color: #ccc;
+}
+
+.tabcontent { /* contents of manage orders - loading plans - training */
+    display: none;
+    grid-area: 2 / 1 / span 1 / span 1;
+    border: 0px;
+    border-top: none;
+    background-color: #ccc;
+}
+
+.tabcontent .tabcontent2 {  /* manage order sub contents: contents */
+
+    display: grid;
+    grid-template-columns: auto auto ;
+    grid-auto-flow: row;
+    padding: 20px;
+    border: 0px solid #ccc;
+    border-top: none;
+    background-color: #ccc;
+}
+
+.tabcontent2 .tabcontent3 {  /* Add Items */
+
+    display: grid;
+    grid-template-columns: 50% 50% ;
+    grid-auto-flow: row;
+    padding: 0px;
+    border: 0px solid #ccc;
+    border-top: none;
+    background-color: #ccc;
+}
+
+.tabcontent .but {   /* manage order sub contents: frame of neworder and removeorder buttons */
+
+    padding: 0px;
+    text-align:center;
+    outline: none;
+    border: none;
+    background-color: #ccc;  /*background color*/
+}
+
+.tabcontent .but button {
+    width: 49.5%;
+    padding-top: 10px;
+    padding-right:  0px;
+    padding-bottom: 10px;
+    padding-left: 0px;
+    background-color: #f1f1f1;
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+.tabcontent .but button:hover {
+    background-color: #ddd;
+}
+
+.tabcontent .but button.active {
+    background-color: #ccc;
+}
+
+.infobox{
+    grid-area: 3 / 1 / span 1 / span 1;
+    display: grid;
+    background-color: #ccc;
+    padding: 20px;
+    font-size: 20px;
+    grid-template-columns: auto auto ;
+    grid-gap: 10px;
+}
+
+#display_area{
+    grid-area: 1 / 2 / span 3 / span 1;
+    overflow: hidden;
+    background-color: darkolivegreen;
+
+}
+
+#flag {
+    background: #00ff00;
+}

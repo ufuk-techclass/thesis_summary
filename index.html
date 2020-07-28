@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8>
+    <title>Visualization System 1.0 </title>
+    <link rel="stylesheet" type="text/css" href="styles/thesis_style.css">
+</head>
+
+<body ng-app="myApp" ng-controller="myCtrl">
+<div class="grid-container">
+    <div class="tab">
+        <button class="tablinks" onclick="openTAB(event, 'Manage Orders')">Manage Orders</button>
+        <button class="tablinks" onclick="openTAB(event, 'Loading Plans')">Loading Plans </button>
+        <button class="tablinks" onclick="openTAB(event, 'Training')">Training</button>
+    </div>
+
+    <div id="Manage Orders" class="tabcontent">
+        <div class="but">
+            <button class="tablinks1" onclick="showDiv2()">New Order</button>
+            <button class="tablinks1" onclick="showDiv3()">Remove Order</button>
+        </div>
+
+        <div class="tabcontent2" id="neworder" style="display:none;" >
+            <div>Customer Name:</div> <div><input type="text" id="mydata[2]" value="name"></div>
+
+            <div>Origin:</div>
+            <div>
+                <select id="or1" onchange="getOrigin(this)">
+                    <option disabled selected value> - select - </option>
+                    <option id="o">Helsinki</option>
+                    <option id="a">Porvoo</option>
+                    <option id="b">Lahti</option>
+                    <option id="c">Tampere</option>
+                    <option id="d">Pori</option>
+                    <option id="e">Kuopio</option>
+                    <option id="f">Vaasa</option>
+                    <option id="g">Oulu</option>
+                    <option id="h">Rovaniemi</option>
+                </select>
+            </div>
+
+            <div>Destination:</div>
+            <div>
+                <select id="des1" onchange="getDestination(this)">
+                    <option disabled selected value> - select - </option>
+                    <option id="o">Helsinki</option>
+                    <option id="a">Porvoo</option>
+                    <option id="b">Lahti</option>
+                    <option id="c">Tampere</option>
+                    <option id="d">Pori</option>
+                    <option id="e">Kuopio</option>
+                    <option id="f">Vaasa</option>
+                    <option id="g">Oulu</option>
+                    <option id="h">Rovaniemi</option>
+                </select>
+            </div>
+
+            <div><button onclick="availableTruck()">Search available trucks</button> </div>
+            <div></div>
+            <div>
+                <form name="mainForm" id="form" style="display:none;">
+                    <table>
+                        <tr ng-repeat="x in trucklist1">
+                            <td><input type="radio" name="truckss" id="truckss1" value="{{trucklist1[$index]}}"  onclick="showDiv()">{{trucklist1[$index]}}  </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div id="add_order1"  style="display:none;">
+                <!-- dummy div for alignment !-->
+            </div>
+
+            <div class="tabcontent3" id="add_order"  style="display:none;">
+                <div><b> Add Items</b></div> <div></div>
+                <div> amount: </div> <div><input type="text" id="visual_data[3]" value="amount" size="5"></div>
+                <div> length (unit):</div> <div> <input type="text" id="visual_data[5]" value="dimension" size="5"></div>
+                <div> width (unit):</div> <div><input type="text" id="visual_data[6]" disabled="disabled" size="5"></div>
+                <div> height (unit):</div> <div> <input type="text" id="visual_data[7]" disabled="disabled" size="5"></div>
+                <div>   <button onclick="visualizeOrder()">Visualize Order</button></div>
+                <div></div>
+                <div>   <button onclick="mySave()" style="padding: 1px 15px;">Save Order</button></div>
+                <div></div>
+                <div>   <button onclick="myReset()">Reset positions</button></div>
+
+                <br>
+                <div></div>
+                <div></div>
+                <div style="font-size:13px ; padding: 4px 0px ;"> Delay Rate (%):</div> <div> <input type="text" id="delay_rate" disabled="disabled" size="5"></div>
+            </div>
+
+            <div id="add_order11"  style="display:none;">
+                <br>
+                <br>
+                1 unit &asymp; 40 cm
+            </div>
+
+            <div></div>
+            <br>
+            <div>   <button onclick="myDelete()">Reset - Delete </button></div>
+            <div>   <input type="checkbox" onclick="hidecontainer(this)"  />Hide Container</div>
+
+        </div>
+
+        <div class="tabcontent2" id="removeorder"  style="display:none;">
+            <div>
+                <select id="removeorder1" onchange="gettrucklist(this)">
+                    <option disabled selected value> -- select location -- </option>
+                    <option id="o">Helsinki</option>
+                    <option id="a">Porvoo</option>
+                    <option id="b">Lahti</option>
+                    <option id="c">Tampere</option>
+                    <option id="d">Pori</option>
+                    <option id="e">Kuopio</option>
+                    <option id="f">Vaasa</option>
+                    <option id="g">Oulu</option>
+                    <option id="h">Rovaniemi</option>
+                </select>
+            </div>
+
+            <div></div>
+            <div>
+                <form name="mainForm_tab1_remove" id="removeorder2" >
+                    <table ng-repeat="x in trucklist3 track by $index">
+                        <tr>
+                            <td></td>
+                            <td>Order ID</td>
+                            <td>Truck ID</td>
+                            <td>Customer</td>
+                        </tr>
+                        <tr ng-repeat="y in x | limitTo: (4 - x.length) ">
+                            <td><button name="truckss3" id="{{x}}" value="{{x[$index+4]}}" ng-click="deletemyorder(x,$index+4)"/> Delete Order</td>
+                            <td> <input type="text" value={{x[$index+4][0]}} size="14" disabled>   </td> <!-- order ids !-->
+                            <td> <input type="text" value={{x[1]}} size="4" disabled>    </td>   <!-- truck id !-->
+                            <td> <input type="text" value={{x[$index+4][1]}} size="4" disabled>    </td>   <!-- truck id !-->
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="Loading Plans" class="tabcontent" >
+        <div class="tabcontent2">
+            <select id="change_chart" onchange="trucklist_tab2(this)">
+                <option disabled selected value> -- select location -- </option>
+                <option id="o">Helsinki</option>
+                <option id="a">Porvoo</option>
+                <option id="b">Lahti</option>
+                <option id="c">Tampere</option>
+                <option id="d">Pori</option>
+                <option id="e">Kuopio</option>
+                <option id="f">Vaasa</option>
+                <option id="g">Oulu</option>
+                <option id="h">Rovaniemi</option>
+            </select>
+            <div></div>
+            <form name="mainForm_tab2" id="form_tab2" >
+                <tr>
+                    <td>Truck Name</td>
+                    <td>Truck ID</td>
+                </tr>
+                <table ng-repeat="x in trucklist2">
+                    <tr >
+                        <td><input type="radio" name="truckss2" id="truckss2" value="{{trucklist2[$index][0]}}" >{{trucklist2[$index][0]}}   </td>
+                        <td><input type="text"  id="truckss2" value="{{trucklist2[$index][1]}}" size="4" disabled> </td>
+                    </tr>
+                </table>
+            </form>
+
+            <div></div>
+            <div id="dummy2">
+                <!-- dummy div for alignment !-->
+            </div>
+
+            <div><button onclick="t2_animation()">moveitem</button></div>
+            <div><button onclick="myReset()">Reset positions</button></div>
+            <div><input type="checkbox" onclick="swapcolor()" id="swapcolor_id"  /> Change color</div>
+            <div>   <input type="checkbox" onclick="hidecontainer(this)"   />Hide Container</div>
+        </div>
+    </div>
+
+    <div id="Training" class="tabcontent">
+        <div id="flag">Available</div>
+        <div><input type="checkbox" onclick="status(this)" id="status"/> Use System</div>
+        <div><button onclick="tab3_additem(1,1,2,'#'+(Math.random()*0xFFFFFF<<0).toString(16))" id="status2" disabled>Add Item (Test Feature)</button></div>
+    </div>
+
+    <div class="infobox ">
+        <div>  Customer: <input type="text" id="Customer" disabled> </div>
+        <div>  Origin: <input type="text" id="Origin" disabled> </div>
+        <div>  Destination: <input type="text" id="Destination" disabled> </div>
+        <div>  Item ID: <input type="text" id="Item ID" disabled> </div>
+        <div>  Order ID: <input type="text" id="Order ID" disabled> </div>
+        <div>  Item status: <input type="text" id="Item status" disabled> </div>
+    </div>
+
+    <div id="display_area">
+        <!--   // https://threejs.org/build/three.js -->
+        <!--   // https://threejs.org/docs/#manual/introduction/Creating-a-scene   -->
+    </div>
+</div>
+</body>
+
+<script src="javascripts/three.js"></script>
+<script src="javascripts/OrbitControls.js"></script>
+<script src="javascripts/STLLoader.js"></script>
+<script src="javascripts/TransformControls.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="javascripts/tez_module_1.js"></script>
+<script src="javascripts/Tween.js"></script>
+<script src="javascripts/thesis_all_scripts.js"></script>
+</html>
